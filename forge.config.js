@@ -2,6 +2,19 @@ const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 
 module.exports = {
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'qingdengyue',
+          name: 'keep-llm-training'
+        },
+        prerelease: false,
+        draft: true
+      }
+    }
+  ],
   packagerConfig: {
     asar: true,
   },
@@ -9,7 +22,10 @@ module.exports = {
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        certificateFile:  process.env.CERTIFICATE_FILE,
+        certificatePassword: process.env.CERTIFICATE_PASSWORD
+      },
     },
     {
       name: '@electron-forge/maker-zip',
